@@ -21,3 +21,7 @@
         }
     }
 }
+
+@utility animate-fade-out {
+    animation: var(--animate-fade-out);
+}
