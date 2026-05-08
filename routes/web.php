@@ -11,3 +11,6 @@ Route::get('/', function (){
 });
 Route::get('/',[YapController::class, 'index']);
 Route::post('/yaps', [YapController::class, 'store']);
+Route::get('/yaps/{yap}/edit', [YapController::class, 'edit']);
+Route::put('/yaps/{yap}', [YapController::class, 'update']);
+Route::delete('/yaps/{yap}', [YapController::class, 'destroy']);

@@ -69,6 +69,7 @@ class YapController extends Controller
     public function edit(Yap $yap)
     {
         //
+        return view('yaps.edit', compact('yap'));
     }
 
     /**
@@ -76,7 +77,20 @@ class YapController extends Controller
      */
     public function update(Request $request, Yap $yap)
     {
-        //
+        // authentication
+        // if($request->user()->cannot('update',$yap)){
+        //     abort(404);
+        // }
+
+        // validates updated text
+        $validated = $request->validate([
+            'message' => 'required|string|max:255|min:5'
+        ]);
+
+        // updates the yap
+        $yap->update($validated);
+
+        return redirect('/')->with('success', 'Yap has been updated!');
     }
 
     /**
@@ -84,6 +98,8 @@ class YapController extends Controller
      */
     public function destroy(Yap $yap)
     {
-        //
+        $yap->delete();
+
+        return redirect('/')->with('success', 'Yap has been deleted!');
     }
 }

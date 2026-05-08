@@ -20,11 +20,28 @@
                 </div>
             @endif
 
-            <div class="min-w-0">
-                <div class="flex items-center gap-1">
-                    <span class="text-sm font-semibold">{{ $yap->user ? $yap->user->name : 'Anonymous' }}</span>
-                    <span class="text-base-content/60">·</span>
-                    <span class="text-sm text-base-content/60">{{ $yap->created_at->diffForHumans() }}</span>
+            <div class="min-w-0 flex-1">
+                <div class="flex justify-between w-full">
+                    <div class="flex items-center gap-1">
+                        <span class="text-sm font-semibold">{{ $yap->user ? $yap->user->name : 'Anonymous' }}</span>
+                        <span class="text-base-content/60">·</span>
+                        <span class="text-sm text-base-content/60">{{ $yap->created_at->diffForHumans() }}</span>
+                    </div>
+
+                    <div class="flex gap-1">
+                        <a href="/yaps/{{ $yap->id }}/edit" class="btn btn-ghost btn-xs">
+                            Edit
+                        </a>
+                        <form method="POST" action="/yaps/{{ $yap->id }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                onclick="return confirm('Are you sure you want to delete this chirp?')"
+                                class="btn btn-ghost btn-xs text-error">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <p class="mt-1">
