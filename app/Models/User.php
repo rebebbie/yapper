@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function yaps(): HasMany
     {
-        return this->hasMany(Yap::class);
+        return $this->hasMany(Yap::class);
     }
 }

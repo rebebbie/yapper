@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Yap;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class YapController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -46,11 +48,13 @@ class YapController extends Controller
             'message.max' => 'Yaps must be 255 characters or less.', 
         ]);
 
+        auth()->user()->yaps()->create($validated);
+
         // create the yap
-        \App\Models\Yap::create([
-            'message' => $validated['message'],
-            'user_id' => null,
-        ]);
+        // \App\Models\Yap::create([
+        //     'message' => $validated['message'],
+        //     'user_id' => null,
+        // ]);
 
         return redirect('/')->with('success', 'Yapped successfully!');
     }
@@ -69,6 +73,8 @@ class YapController extends Controller
     public function edit(Yap $yap)
     {
         //
+        $this->authorize('update',$yap);
+
         return view('yaps.edit', compact('yap'));
     }
 
@@ -81,6 +87,8 @@ class YapController extends Controller
         // if($request->user()->cannot('update',$yap)){
         //     abort(404);
         // }
+
+        $this->authorize('update',$yap);
 
         // validates updated text
         $validated = $request->validate([
@@ -98,6 +106,7 @@ class YapController extends Controller
      */
     public function destroy(Yap $yap)
     {
+        $this->authorize('delete', $yap);
         $yap->delete();
 
         return redirect('/')->with('success', 'Yap has been deleted!');

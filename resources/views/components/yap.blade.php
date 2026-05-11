@@ -26,8 +26,13 @@
                         <span class="text-sm font-semibold">{{ $yap->user ? $yap->user->name : 'Anonymous' }}</span>
                         <span class="text-base-content/60">·</span>
                         <span class="text-sm text-base-content/60">{{ $yap->created_at->diffForHumans() }}</span>
+                        @if ($yap->updated_at->gt($yap->created_at->addSeconds(5)))
+                            <span class="text-base-content/60">.</span>
+                            <span class="text-sm text-base-content/60 italic">edited {{$yap->updated_at}}</span>
+                        @endif
                     </div>
 
+                    @can('update',$yap)
                     <div class="flex gap-1">
                         <a href="/yaps/{{ $yap->id }}/edit" class="btn btn-ghost btn-xs">
                             Edit
@@ -42,6 +47,7 @@
                             </button>
                         </form>
                     </div>
+                    @endcan
                 </div>
 
                 <p class="mt-1">
