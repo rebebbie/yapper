@@ -14,11 +14,14 @@ class YapController extends Controller
      */
     public function index()
     {
-        $yaps = Yap::with('user')
-            ->latest()
-            ->take(50)
-            ->get();
-        return view('home', ['yaps'=>$yaps]);
+        // $yaps = Yap::with('user')
+        //     ->latest()
+        //     ->take(50)
+        //     ->get();
+        // return view('home', ['yaps'=>$yaps]);
+        return view('home', [
+            'yaps'=>Yap::orderBy('updated_at','DESC')->paginate(5)
+        ]);
     }
 
     /**

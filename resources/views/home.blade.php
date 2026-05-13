@@ -42,5 +42,7 @@
             <p class="text-gray-500">It's quiet in here... start the yapfest!</p>
         </div>
         @endforelse
+
+        {{ $yaps->links() }}
     </div>
 </x-layout>

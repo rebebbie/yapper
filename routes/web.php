@@ -5,6 +5,7 @@ use App\Http\Controllers\YapController;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Login;
+use App\Http\Controllers\Auth\Profile;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[YapController::class, 'index']);
@@ -27,4 +28,8 @@ Route::view('/login', 'auth.login')
 Route::post('/login', Login::class)
     ->middleware('guest');
 Route::post('/logout', Logout::class)
+    ->middleware('auth');
+Route::view('/profile', 'auth.profile')
+    ->middleware('auth');
+Route::post('/profile', Profile::class)
     ->middleware('auth');
